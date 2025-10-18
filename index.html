@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+<title>长图展示页</title>
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #000;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 顶部导航栏 */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2px;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  transition: background 0.4s ease;
+}
+header.scrolled {
+  background: rgba(0, 0, 0, 0.75);
+}
+.title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-shadow: 0 0 6px rgba(0,0,0,0.4);
+}
+.menu-btn {
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+  margin-left: auto;
+  margin-right: 4px;
+}
+.menu-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
+}
+
+/* 下拉菜单 */
+.dropdown {
+  position: fixed;
+  top: 56px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+  display: none;
+  flex-direction: column;
+  min-width: 160px;
+  z-index: 99;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.dropdown.show {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+.dropdown a {
+  text-decoration: none;
+  color: #fff;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  transition: background 0.15s ease;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.dropdown a:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* 主体内容 */
+.container {
+  width: 100%;
+  max-width: 420px;
+  margin: 56px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #000;
+}
+.long-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  background: #000;
+}
+footer {
+  color: #666;
+  font-size: 12px;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* === 微信/QQ 提示层 === */
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 9999;
+  text-align: center;
+  padding: 20px;
+}
+#overlay.show {
+  display: flex;
+  animation: fadeIn 0.4s ease;
+}
+#overlay p {
+  font-size: 1rem;
+  margin-top: 2rem;
+  line-height: 1.5;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 箭头动画 */
+.arrow {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  opacity: 0.8;
+  animation: bounce 1.2s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(-10px); opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+  <!-- 顶部导航 -->
+  <header id="header">
+    <div class="title">我的作品展示页</div>
+    <button class="menu-btn" id="menu-toggle">菜单 ▼</button>
+    <div class="dropdown" id="dropdown-menu">
+	  <a href="https://qm.qq.com/q/ybuzKwOhoY" target="_blank" rel="noopener noreferrer">QQ</a>
+      <a href="https://discord.gg/aVaGHJAkbq" target="_blank" rel="noopener noreferrer">Discord</a>
+      <a href="https://t.me/jiujiu725bot" target="_blank" rel="noopener noreferrer">Telegram</a>
+    </div>
+  </header>
+
+  <!-- 主体 -->
+  <div class="container">
+    <img class="long-image" src="images/99.png" alt="长图展示">
+    <footer>© 2025 我的作品展示页</footer>
+  </div>
+
+  <!-- 微信/QQ 提示层 -->
+  <div id="overlay">
+    <img class="arrow" src="https://cdn.jsdelivr.net/gh/icons8/flat-color-icons/svg/up-right-arrow.svg" alt="arrow">
+    <p>请点击右上角<br>选择“在浏览器中打开”</p>
+  </div>
+
+  <script>
+  const menuBtn = document.getElementById('menu-toggle');
+  const dropdown = document.getElementById('dropdown-menu');
+  const header = document.getElementById('header');
+  const overlay = document.getElementById('overlay');
+
+  // 菜单交互
+  menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('show');
+  });
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target) && e.target !== menuBtn) {
+      dropdown.classList.remove('show');
+    }
+  });
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // 检测是否在微信或 QQ 内置浏览器
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes('micromessenger') || ua.includes('qq/')) {
+    overlay.classList.add('show');
+  }
+  </script>
+</body>
+</html>
