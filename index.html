@@ -30,7 +30,7 @@
 				</div>
 				<nav>
 					<ul>
-						<li><a target="_blank" href="https://fansly.com/Mia_Model_99">Telegram</a></li>
+						<li><a target="_blank" href="https://fansly.com/Mia_Model_99">fansly</a></li>
 						<li><a target="_blank" href="https://chaturbate.com/in/?tour=7Bge&campaign=LNQ8N&track=default&room=mia_model_99/">Chaturbate</a></li>
 						<li><a target="_blank" href="https://stripchat.com/Mia_Model_99/follow-me/">Stripchat</a></li>
 						<li><a target="_blank" href="https://x.com/Mia_Model_99/">Twitter</a></li>
@@ -476,55 +476,55 @@
 				renderSpec.halfWidth = Math.floor(w / 2);
 				renderSpec.halfHeight = Math.floor(h / 2);
 				renderSpec.halfArray[0] = renderSpec.halfWidth;
-				renderSpec.halfArray[1] = renderSpec.halfHeight;
-				renderSpec.halfArray[2] = renderSpec.halfWidth / renderSpec.halfHeight;
+				renderSpec.halfArray[1] = renderSpec。halfHeight;
+				renderSpec。halfArray[2] = renderSpec.halfWidth / renderSpec.halfHeight;
 			};
 
 			function deleteRenderTarget(rt) {
-				gl.deleteFramebuffer(rt.frameBuffer);
-				gl.deleteRenderbuffer(rt.renderBuffer);
+				gl.deleteFramebuffer(rt。frameBuffer);
+				gl.deleteRenderbuffer(rt。renderBuffer);
 				gl.deleteTexture(rt.texture);
 			}
 
-			function createRenderTarget(w, h) {
+			function createRenderTarget(w， h) {
 				var ret = {
 					width: w,
 					height: h,
 					sizeArray: new Float32Array([w, h, w / h]),
-					dtxArray: new Float32Array([1.0 / w, 1.0 / h]),
+					dtxArray: new Float32Array([1.0 / w, 1.0 / h])，
 				};
-				ret.frameBuffer = gl.createFramebuffer();
-				ret.renderBuffer = gl.createRenderbuffer();
-				ret.texture = gl.createTexture();
+				ret。frameBuffer = gl。createFramebuffer();
+				ret。renderBuffer = gl.createRenderbuffer();
+				ret.texture = gl。createTexture();
 
-				gl.bindTexture(gl.TEXTURE_2D, ret.texture);
-				gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
-				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+				gl。bindTexture(gl.TEXTURE_2D, ret.texture);
+				gl.texImage2D(gl。TEXTURE_2D， 0, gl。RGBA, w, h, 0, gl。RGBA, gl.UNSIGNED_BYTE, null);
+				gl。texParameteri(gl。TEXTURE_2D， gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+				gl。texParameteri(gl。TEXTURE_2D， gl。TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+				gl.texParameteri(gl。TEXTURE_2D, gl。TEXTURE_MIN_FILTER, gl。LINEAR);
 
-				gl.bindFramebuffer(gl.FRAMEBUFFER, ret.frameBuffer);
-				gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, ret.texture, 0);
+				gl.bindFramebuffer(gl。FRAMEBUFFER， ret.frameBuffer);
+				gl.framebufferTexture2D(gl。FRAMEBUFFER， gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, ret.texture, 0);
 
-				gl.bindRenderbuffer(gl.RENDERBUFFER, ret.renderBuffer);
-				gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, w, h);
-				gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, ret.renderBuffer);
+				gl.bindRenderbuffer(gl。RENDERBUFFER， ret.renderBuffer);
+				gl.renderbufferStorage(gl。RENDERBUFFER, gl。DEPTH_COMPONENT16, w， h);
+				gl.framebufferRenderbuffer(gl。FRAMEBUFFER， gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, ret.renderBuffer);
 
 				gl.bindTexture(gl.TEXTURE_2D, null);
-				gl.bindRenderbuffer(gl.RENDERBUFFER, null);
-				gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+				gl.bindRenderbuffer(gl。RENDERBUFFER， null);
+				gl.bindFramebuffer(gl。FRAMEBUFFER， null);
 
 				return ret;
 			}
 
-			function compileShader(shtype, shsrc) {
+			function compileShader(shtype， shsrc) {
 				var retsh = gl.createShader(shtype);
 
-				gl.shaderSource(retsh, shsrc);
+				gl。shaderSource(retsh, shsrc);
 				gl.compileShader(retsh);
 
-				if (!gl.getShaderParameter(retsh, gl.COMPILE_STATUS)) {
+				if (!gl.getShaderParameter(retsh， gl.COMPILE_STATUS)) {
 					var errlog = gl.getShaderInfoLog(retsh);
 					gl.deleteShader(retsh);
 					console.error(errlog);
@@ -533,23 +533,23 @@
 				return retsh;
 			}
 
-			function createShader(vtxsrc, frgsrc, uniformlist, attrlist) {
-				var vsh = compileShader(gl.VERTEX_SHADER, vtxsrc);
-				var fsh = compileShader(gl.FRAGMENT_SHADER, frgsrc);
+			function createShader(vtxsrc， frgsrc， uniformlist， attrlist) {
+				var vsh = compileShader(gl。VERTEX_SHADER， vtxsrc);
+				var fsh = compileShader(gl。FRAGMENT_SHADER， frgsrc);
 
 				if (vsh == null || fsh == null) {
 					return null;
 				}
 
 				var prog = gl.createProgram();
-				gl.attachShader(prog, vsh);
-				gl.attachShader(prog, fsh);
+				gl.attachShader(prog， vsh);
+				gl.attachShader(prog， fsh);
 
 				gl.deleteShader(vsh);
 				gl.deleteShader(fsh);
 
 				gl.linkProgram(prog);
-				if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+				if (!gl.getProgramParameter(prog， gl.LINK_STATUS)) {
 					var errlog = gl.getProgramInfoLog(prog);
 					console.error(errlog);
 					return null;
@@ -1103,24 +1103,24 @@
 			function makeCanvasFullScreen(canvas) {
 				var b = document.body;
 				var d = document.documentElement;
-				fullw = Math.max(b.clientWidth, b.scrollWidth, d.scrollWidth, d.clientWidth);
-				fullh = Math.max(b.clientHeight, b.scrollHeight, d.scrollHeight, d.clientHeight);
+				fullw = Math.max(b。clientWidth， b。scrollWidth, d。scrollWidth, d。clientWidth);
+				fullh = Math.max(b。clientHeight， b。scrollHeight, d。scrollHeight, d.clientHeight);
 				canvas.width = fullw;
 				canvas.height = fullh;
 			}
 
-			window.addEventListener("load", function (e) {
+			window。addEventListener("load"， function (e) {
 				var canvas = document.getElementById("sakura");
 				try {
 					makeCanvasFullScreen(canvas);
-					gl = canvas.getContext("experimental-webgl");
+					gl = canvas。getContext("experimental-webgl");
 				} catch (e) {
 					alert("WebGL not supported." + e);
-					console.error(e);
+					console。error(e);
 					return;
 				}
 
-				window.addEventListener("resize", onResize);
+				window.addEventListener("resize"， onResize);
 
 				setViewports();
 				createScene();
@@ -1140,7 +1140,7 @@
 					w["msR" + r] ||
 					w["oR" + r] ||
 					function (c) {
-						w.setTimeout(c, 1000 / 60);
+						w。setTimeout(c， 1000 / 60);
 					};
 			})(window, "equestAnimationFrame");
 		</script>
